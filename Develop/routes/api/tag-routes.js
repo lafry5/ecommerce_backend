@@ -18,7 +18,7 @@ router.get('/:id', (req, res) => {
     Category.findAll({
       where: {
         id: req.params.id
-      }
+      },
     }).then(results => {
       res.json(results);
     });
@@ -26,27 +26,31 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
   // create a new tag
-  Product.create(req.body, {
-    // TBD
-   }).then(results => {
-     res.json(results);
-   });
+  Tag.create(req.body, {
+    id: req.body.id,
+    tag_name: req.body.tag_name,
+  }).then(results => {
+    res.json(results);
+  })
 });
 
 router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
-  Product.update(req.body, {
+  Tag.update(req.body, {
+    id: req.body.id,
+    tag_name: req.body.tag_name
+  },{
     where: {
-      id: req.params.id,
-    },
+      id: req.params.id
+    }
   }).then(results => {
     res.json(results);
-  });
+  })
 });
 
 router.delete('/:id', (req, res) => {
   // delete on tag by its `id` value
-  User.destroy({
+  Tag.destroy({
     where: {
       id: req.params.id
     }

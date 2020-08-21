@@ -15,7 +15,7 @@ router.get('/:id', (req, res) => {
   Product.findAll({
     where: {
       id: req.params.id
-    }
+    },
   }).then(results => {
     res.json(results);
   });
@@ -57,14 +57,18 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
   // update product data
   Product.update(req.body, {
+    id: req.body.id,
+    product_name: req.body.product_name,
+    price: req.body.price,
+    category_id: req.body.category_id
+  },{
     where: {
-      id: req.params.id,
-    },
+      id: req.params.id
+    }
   // }).then(results => {
   //   res.json(results);
   // });
-  })
-    .then((product) => {
+  }).then((product) => {
       // find all associated tags from ProductTag
       return ProductTag.findAll({ where: { product_id: req.params.id } });
     })

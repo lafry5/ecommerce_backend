@@ -13,7 +13,7 @@ router.get('/:id', (req, res) => {
   // find one category by its `id` value "where"
   // be sure to include its associated Products //what does this mean?
   router.get('/:id', (req, res) => {
-    Category.findAll({
+    Category.findOne({ //can also use findAll
       where: {
         id: req.params.id
       }
@@ -23,34 +23,38 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  // "create" a new category
-  Product.create(req.body, {
-   // TBD
+  // "create" a new category    //Need to confirm this
+  Category.create(req.body, {
+    id: req.body.id,
+    category_name: req.body.category_name,
   }).then(results => {
     res.json(results);
-  });
+  })
 });
 
 router.put('/:id', (req, res) => {
   // "update" a category by its `id` value
-  Product.update(req.body, {
-    where: {
-      id: req.params.id,
-    },
-  }).then(results => {
-    res.json(results);
-  });
-});
-
-router.delete('/:id', (req, res) => {
-  // "delete" a category by its `id` value
-  User.destroy({
+  Category.update(req.body, {
+    id: req.body.id,
+    category_name: req.body.category_name
+  },{
     where: {
       id: req.params.id
     }
   }).then(results => {
     res.json(results);
-  });
+  })
+});
+
+router.delete('/:id', (req, res) => {
+  // "delete" a category by its `id` value
+  Category.destroy({
+    where: {
+      id: req.params.id
+    },
+  }).then(results => {
+    res.json(results);
+  })
 });
 
 module.exports = router;
