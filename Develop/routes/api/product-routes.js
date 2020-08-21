@@ -5,17 +5,23 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // get all products
 router.get('/', (req, res) => {
-  // find all products
-  // be sure to include its associated Category and Tag data
+  Product.findAll({}).then(results => {
+    res.json(results);
+  });
 });
 
 // get one product
 router.get('/:id', (req, res) => {
-  // find a single product by its `id`
-  // be sure to include its associated Category and Tag data
+  Product.findAll({
+    where: {
+      id: req.params.id
+    }
+  }).then(results => {
+    res.json(results);
+  });
 });
 
-// create new product
+// create new product  //what is needed here?
 router.post('/', (req, res) => {
   /* req.body should look like this...
     {
@@ -54,6 +60,9 @@ router.put('/:id', (req, res) => {
     where: {
       id: req.params.id,
     },
+  // }).then(results => {
+  //   res.json(results);
+  // });
   })
     .then((product) => {
       // find all associated tags from ProductTag
@@ -91,6 +100,13 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
+  User.destroy({
+    where: {
+      id: req.params.id
+    }
+  }).then(results => {
+    res.json(results);
+  });
 });
 
 module.exports = router;
