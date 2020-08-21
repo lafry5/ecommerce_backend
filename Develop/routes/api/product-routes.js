@@ -5,7 +5,15 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // get all products
 router.get('/', (req, res) => {
-  Product.findAll({}).then(results => {
+  Product.findAll({
+    include: [
+      Category,
+      {
+        model: Tag,
+        through: ProductTag
+      }
+    ]
+  }).then(results => {
     res.json(results);
   });
 });
@@ -16,6 +24,13 @@ router.get('/:id', (req, res) => {
     where: {
       id: req.params.id
     },
+    include: [
+      Category,
+      {
+        model: Tag,
+        through: ProductTag
+      }
+    ] 
   }).then(results => {
     res.json(results);
   });
@@ -31,8 +46,12 @@ router.post('/', (req, res) => {
       tagIds: [1, 2, 3, 4]
     }
   */
-  Product.create(req.body)
-    .then((product) => {
+  Product.create({
+      product_name: req.body.product_name,
+      price: req.body.price,
+      stock: req.body.stock,
+      tagIds: [req.body.tagIds]
+  }).then((product) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
       if (req.body.tagIds.length) {
         const productTagIdArr = req.body.tagIds.map((tag_id) => {
@@ -56,18 +75,10 @@ router.post('/', (req, res) => {
 // update product
 router.put('/:id', (req, res) => {
   // update product data
-  Product.update(req.body, {
-    id: req.body.id,
-    product_name: req.body.product_name,
-    price: req.body.price,
-    category_id: req.body.category_id
-  },{
-    where: {
+  Product.update(req.body, 
+  { where: {
       id: req.params.id
     }
-  // }).then(results => {
-  //   res.json(results);
-  // });
   }).then((product) => {
       // find all associated tags from ProductTag
       return ProductTag.findAll({ where: { product_id: req.params.id } });
