@@ -6,23 +6,53 @@ const { Tag, Product, ProductTag } = require('../../models');
 router.get('/', (req, res) => {
   // find all tags
   // be sure to include its associated Product data
+  Tag.findAll({}).then(results => {
+    res.json(results);
+  });
 });
 
 router.get('/:id', (req, res) => {
   // find a single tag by its `id`
-  // be sure to include its associated Product data
+  // be sure to include its associated Product data  //what does this mean?
+  router.get('/:id', (req, res) => {
+    Category.findAll({
+      where: {
+        id: req.params.id
+      }
+    }).then(results => {
+      res.json(results);
+    });
 });
 
 router.post('/', (req, res) => {
   // create a new tag
+  Product.create(req.body, {
+    // TBD
+   }).then(results => {
+     res.json(results);
+   });
 });
 
 router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
+  Product.update(req.body, {
+    where: {
+      id: req.params.id,
+    },
+  }).then(results => {
+    res.json(results);
+  });
 });
 
 router.delete('/:id', (req, res) => {
   // delete on tag by its `id` value
+  User.destroy({
+    where: {
+      id: req.params.id
+    }
+  }).then(results => {
+    res.json(results);
+  });
 });
 
 module.exports = router;
