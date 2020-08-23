@@ -12,6 +12,7 @@ router.get('/', (req, res) => {
       through: ProductTag
     }
     ]
+    // include: [Product]
   }).then(results => {
     res.json(results);
   });
@@ -20,10 +21,11 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   // find a single tag by its `id`
   // be sure to include its associated Product data  //what does this mean?
-    Category.findAll({
+    Tag.findAll({
       where: {
         id: req.params.id
       },
+      // include: [Product]
       include: [{
           model: Product,
           through: ProductTag

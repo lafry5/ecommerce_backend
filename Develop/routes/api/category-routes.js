@@ -26,8 +26,13 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
   // "create" a new category    //Need to confirm this
-  Category.create(req.body
-    ).then(results => {
+  Category.create
+//   ({
+//     id: req.body.id,
+//     category_name: req.body.category_name,
+// })
+(req.body)
+.then(results => {
     res.json(results);
   })
 });
