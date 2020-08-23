@@ -5,7 +5,7 @@ const { Category, Product } = require('../../models');
 
 router.get('/', (req, res) => {
   Category.findAll({
-    include: [Product]
+    include: [Product],
   }).then(results => {
     res.json(results);
   });
@@ -16,7 +16,7 @@ router.get('/:id', (req, res) => {
   // be sure to include its associated Products //what does this mean?
     Category.findOne({ //can also use findAll
       where: {
-        id: req.params.id
+        id: req.params.id,
       },
       include: [Product]
     }).then(results => {
@@ -39,11 +39,15 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   // "update" a category by its `id` value
-  Category.update(req.body,
-  {
-    where: {
-      id: req.params.id
-    }
+  // console.log(req);
+  // console.log(req.params.category_name)
+  Category.update(
+    req.body,{
+      // // id: req.body.id,
+  //     // category_name: req.body.category_name,
+      where: {
+      id: req.params.id,
+    },
   }).then(results => {
     res.json(results);
   })
@@ -53,7 +57,7 @@ router.delete('/:id', (req, res) => {
   // "delete" a category by its `id` value
   Category.destroy({
     where: {
-      id: req.params.id
+      id: req.params.id,
     },
   }).then(results => {
     res.json(results);
