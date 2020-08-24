@@ -32,7 +32,7 @@ router.post('/', (req, res) => {
 //     category_name: req.body.category_name,
 // })
 (req.body)
-.then(results => {
+  .then(results => {
     res.json(results);
   })
 });
@@ -41,8 +41,7 @@ router.put('/:id', (req, res) => {
   // "update" a category by its `id` value
   // console.log(req);
   // console.log(req.params.category_name)
-  Category.update(
-    req.body,{
+  Category.update({
       // // id: req.body.id,
   //     // category_name: req.body.category_name,
       where: {
