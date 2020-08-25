@@ -26,13 +26,10 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
   // "create" a new category    //Need to confirm this
-  Category.create
-//   ({
-//     id: req.body.id,
-//     category_name: req.body.category_name,
-// })
-(req.body)
-  .then(results => {
+  Category.create({
+    id: req.body.id,
+    category_name: req.body.category_name,
+  }).then(results => {
     res.json(results);
   })
 });
@@ -41,13 +38,16 @@ router.put('/:id', (req, res) => {
   // "update" a category by its `id` value
   // console.log(req);
   // console.log(req.params.category_name)
-  Category.update({
-      // // id: req.body.id,
-  //     // category_name: req.body.category_name,
-      where: {
-      id: req.params.id,
+  Category.update(
+    {
+      category_name: req.body.category_name,
     },
-  }).then(results => {
+    {
+      where: {
+        id: req.params.id,
+      },
+    }
+  ).then(results => {
     res.json(results);
   })
 });
